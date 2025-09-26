@@ -1,0 +1,3 @@
+[Logger] Opened transaction log.
+Transfer: Alice -> Bob : 300.000000
+[Logger] Closing transaction log.
