@@ -1,0 +1,2 @@
+Hello, Smart Pointers!
+RAII is awesome!
