@@ -1,8 +1,8 @@
 #ifndef COMBAT_H
 #define COMBAT_H
 
-#include "Enemy.h"
-#include "Player.h"
+#include "../Entities/Enemy.h"
+#include "../Entities/Player.h"
 
 void startBattle(Player& player, Enemy& enemy);
 
