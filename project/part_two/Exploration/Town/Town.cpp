@@ -28,26 +28,51 @@ void visitQuestBoard(QuestManager& questManager) {
   cout << "Several notices are pinned to it.\n\n";
 
   cout << "Available Quests:\n";
-  cout << "1. [Goblin Slayer] - Defeat 3 goblins (Reward: 50 gold)\n";
-  cout << "2. [Forest Patrol] - Defeat 5 goblins (Reward: 100 gold)\n";
-  cout << "3. [Goblin Chief] - Defeat 10 goblins (Reward: 200 gold)\n";
-  cout << "4. Leave quest board\n\n";
+  cout << "1. [Goblin Menace] - Defeat 5 Goblins (Reward: 60 gold)\n";
+  cout << "2. [Wolf Pack] - Defeat 3 Wild Wolves (Reward: 80 gold)\n";
+  cout << "3. [Bandit Problem] - Defeat 4 Forest Bandits (Reward: 100 gold)\n";
+  cout << "4. [Monster Hunter] - Defeat 10 monsters (Reward: 150 gold)\n";
+  cout << "5. [Orc Threat] - Defeat 2 Orc Warriors (Reward: 120 gold)\n";
+  cout << "6. [Troll Slayer] - Defeat 1 Forest Troll (Reward: 200 gold)\n";
+  cout << "7. [Seasoned Adventurer] - Defeat 20 monsters (Reward: 300 gold)\n";
+  cout << "8. Leave quest board\n\n";
 
-  int choice = getTownChoice(1, 4);
+  int choice = getTownChoice(1, 8);
 
   if (choice == 1) {
-    Quest quest("Goblin Slayer", "Defeat 3 goblins in the forest", 3, 50);
+    Quest quest("Goblin Menace", "Defeat 5 Goblins terrorizing travelers", 5,
+                60);
     questManager.addQuest(quest);
     cout << "\nPress Enter to continue...";
     cin.get();
   } else if (choice == 2) {
-    Quest quest("Forest Patrol", "Defeat 5 goblins in the forest", 5, 100);
+    Quest quest("Wolf Pack", "Defeat 3 Wild Wolves in the forest", 3, 80);
     questManager.addQuest(quest);
     cout << "\nPress Enter to continue...";
     cin.get();
   } else if (choice == 3) {
-    Quest quest("Goblin Chief", "Defeat 10 goblins - prove your worth!", 10,
-                200);
+    Quest quest("Bandit Problem", "Defeat 4 Forest Bandits", 4, 100);
+    questManager.addQuest(quest);
+    cout << "\nPress Enter to continue...";
+    cin.get();
+  } else if (choice == 4) {
+    Quest quest("Monster Hunter", "Defeat 10 monsters of any type", 10, 150);
+    questManager.addQuest(quest);
+    cout << "\nPress Enter to continue...";
+    cin.get();
+  } else if (choice == 5) {
+    Quest quest("Orc Threat", "Defeat 2 Orc Warriors", 2, 120);
+    questManager.addQuest(quest);
+    cout << "\nPress Enter to continue...";
+    cin.get();
+  } else if (choice == 6) {
+    Quest quest("Troll Slayer", "Defeat 1 Forest Troll", 1, 200);
+    questManager.addQuest(quest);
+    cout << "\nPress Enter to continue...";
+    cin.get();
+  } else if (choice == 7) {
+    Quest quest("Seasoned Adventurer", "Defeat 20 monsters - prove your worth!",
+                20, 300);
     questManager.addQuest(quest);
     cout << "\nPress Enter to continue...";
     cin.get();
@@ -127,38 +152,43 @@ void visitTavern(Player& player) {
 }
 
 void exploreTown(Player& player, QuestManager& questManager) {
-  cout << "\n=== TOWN ===\n";
-  cout << "You walk through the peaceful town square.\n";
-  cout << "Merchants are selling their wares and children are playing.\n";
-  cout << "A wooden quest board stands prominently in the center.\n\n";
+  bool inTown = true;
 
-  cout << "Where do you want to go?\n";
-  cout << "1. Visit the quest board\n";
-  cout << "2. Visit the blacksmith\n";
-  cout << "3. Go to the tavern\n";
-  cout << "4. Turn in completed quests\n";
-  cout << "5. View inventory\n";
-  cout << "6. Leave town\n\n";
+  while (inTown) {
+    cout << "\n=== TOWN ===\n";
+    cout << "You walk through the peaceful town square.\n";
+    cout << "Merchants are selling their wares and children are playing.\n";
+    cout << "A wooden quest board stands prominently in the center.\n\n";
 
-  int choice = getTownChoice(1, 6);
+    cout << "Where do you want to go?\n";
+    cout << "1. Visit the quest board\n";
+    cout << "2. Visit the blacksmith\n";
+    cout << "3. Go to the tavern\n";
+    cout << "4. Turn in completed quests\n";
+    cout << "5. View inventory\n";
+    cout << "6. Leave town\n\n";
 
-  if (choice == 1) {
-    visitQuestBoard(questManager);
-  } else if (choice == 2) {
-    visitBlacksmith(player);
-  } else if (choice == 3) {
-    visitTavern(player);
-  } else if (choice == 4) {
-    questManager.checkAndCompleteQuests(player);
-    cout << "\nPress Enter to continue...";
-    cin.get();
-  } else if (choice == 5) {
-    player.displayInventory();
-    cout << "\nPress Enter to continue...";
-    cin.get();
-  } else {
-    cout << "\nYou leave the safety of the town.\n";
-    cout << "\nPress Enter to continue...";
-    cin.get();
+    int choice = getTownChoice(1, 6);
+
+    if (choice == 1) {
+      visitQuestBoard(questManager);
+    } else if (choice == 2) {
+      visitBlacksmith(player);
+    } else if (choice == 3) {
+      visitTavern(player);
+    } else if (choice == 4) {
+      questManager.checkAndCompleteQuests(player);
+      cout << "\nPress Enter to continue...";
+      cin.get();
+    } else if (choice == 5) {
+      player.displayInventory();
+      cout << "\nPress Enter to continue...";
+      cin.get();
+    } else {
+      cout << "\nYou leave the safety of the town.\n";
+      cout << "\nPress Enter to continue...";
+      cin.get();
+      inTown = false;
+    }
   }
 }

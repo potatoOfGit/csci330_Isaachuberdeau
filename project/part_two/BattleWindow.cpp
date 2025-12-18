@@ -52,9 +52,10 @@ int main() {
     cout << "2. Venture into the forest\n";
     cout << "3. View quests\n";
     cout << "4. View inventory\n";
-    cout << "5. Rest (end game)\n\n";
+    cout << "5. Rest (restore HP)\n";
+    cout << "6. Quit game\n\n";
 
-    int choice = getMainChoice(1, 5);
+    int choice = getMainChoice(1, 6);
 
     if (choice == 1) {
       exploreTown(hero, questManager);
@@ -69,10 +70,23 @@ int main() {
       hero.displayInventory();
       cout << "\nPress Enter to continue...";
       cin.get();
+    } else if (choice == 5) {
+      cout << "\nYou rest at the inn...\n";
+      cout << "The night passes peacefully.\n";
+      hero.heal(hero.getMaxHealth());
+      cout << "HP fully restored!\n";
+      cout << "A new day begins...\n";
+      cout << "\nPress Enter to continue...";
+      cin.get();
     } else {
-      cout << "\nYou decide to rest for the day.\n";
-      cout << "Your adventure ends here... for now.\n";
-      playing = false;
+      cout << "\nAre you sure you want to quit? (y/n): ";
+      char confirm;
+      cin >> confirm;
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+      if (confirm == 'y' || confirm == 'Y') {
+        cout << "\nYour adventure ends here... for now.\n";
+        playing = false;
+      }
     }
   }
 
