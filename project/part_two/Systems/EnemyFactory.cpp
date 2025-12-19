@@ -4,7 +4,7 @@
 #include <vector>
 
 Enemy* GoblinFactory::createEnemy() const {
-  return new Enemy("Goblin", 40, 12);
+  return new Enemy("Goblin", 40, 12, 25);
 }
 
 std::string GoblinFactory::getDescription() const {
@@ -12,7 +12,7 @@ std::string GoblinFactory::getDescription() const {
 }
 
 Enemy* WolfFactory::createEnemy() const {
-  return new Enemy("Wild Wolf", 50, 15);
+  return new Enemy("Wild Wolf", 50, 15, 35);
 }
 
 std::string WolfFactory::getDescription() const {
@@ -20,7 +20,7 @@ std::string WolfFactory::getDescription() const {
 }
 
 Enemy* BanditFactory::createEnemy() const {
-  return new Enemy("Forest Bandit", 60, 18);
+  return new Enemy("Forest Bandit", 60, 18, 45);
 }
 
 std::string BanditFactory::getDescription() const {
@@ -28,7 +28,7 @@ std::string BanditFactory::getDescription() const {
 }
 
 Enemy* OrcFactory::createEnemy() const {
-  return new Enemy("Orc Warrior", 80, 22);
+  return new Enemy("Orc Warrior", 80, 22, 60);
 }
 
 std::string OrcFactory::getDescription() const {
@@ -36,7 +36,7 @@ std::string OrcFactory::getDescription() const {
 }
 
 Enemy* TrollFactory::createEnemy() const {
-  return new Enemy("Forest Troll", 100, 25);
+  return new Enemy("Forest Troll", 100, 25, 80);
 }
 
 std::string TrollFactory::getDescription() const {

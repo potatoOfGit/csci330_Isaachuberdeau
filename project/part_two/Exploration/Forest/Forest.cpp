@@ -1,29 +1,14 @@
 #include "Forest.h"
 
 #include <iostream>
-#include <limits>
 
 #include "../../Entities/Enemy.h"
 #include "../../Systems/Combat.h"
 #include "../../Systems/EnemyFactory.h"
+#include "../../Systems/InputUtils.h"
 #include "Dungeon.h"
 
 using namespace std;
-
-int getForestChoice(int min, int max) {
-  int choice;
-  while (true) {
-    cout << "Enter your choice: ";
-    if (cin >> choice && choice >= min && choice <= max) {
-      cin.ignore(numeric_limits<streamsize>::max(), '\n');
-      return choice;
-    } else {
-      cout << "Invalid choice! Try again.\n";
-      cin.clear();
-      cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-  }
-}
 
 void exploreForest(Player& player, QuestManager& questManager) {
   bool inForest = true;
@@ -55,7 +40,7 @@ void exploreForest(Player& player, QuestManager& questManager) {
     }
 
     int maxChoice = (enemiesDefeated >= ENEMIES_REQUIRED) ? 5 : 4;
-    int choice = getForestChoice(1, maxChoice);
+    int choice = getChoice(1, maxChoice);
 
     if (choice == 1) {
       cout << "\nYou walk deeper into the forest...\n";

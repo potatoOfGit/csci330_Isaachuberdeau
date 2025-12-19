@@ -4,8 +4,8 @@
 
 #include "Player.h"
 
-Enemy::Enemy(const std::string& n, int h, int a)
-    : name(n), health(h), attack(a) {}
+Enemy::Enemy(const std::string& n, int h, int a, int xp)
+    : name(n), health(h), attack(a), xpReward(xp) {}
 
 void Enemy::takeDamage(int damage) {
   health -= damage;
@@ -24,3 +24,5 @@ std::string Enemy::getName() const { return name; }
 int Enemy::getHealth() const { return health; }
 
 int Enemy::getAttack() const { return attack; }
+
+int Enemy::getXPReward() const { return xpReward; }

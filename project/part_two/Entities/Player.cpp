@@ -1,5 +1,6 @@
 #include "Player.h"
 
+#include <cmath>
 #include <iostream>
 
 #include "../Systems/Shop.H"
@@ -10,6 +11,10 @@ Player::Player(const std::string& n, int h, int a)
       health(h),
       maxHealth(h),
       baseAttack(a),
+      defense(5),
+      level(1),
+      experience(0),
+      experienceToNextLevel(100),
       gold(0),
       equippedWeapon(nullptr),
       potionCount(0) {}
@@ -17,8 +22,15 @@ Player::Player(const std::string& n, int h, int a)
 Player::~Player() { delete equippedWeapon; }
 
 void Player::takeDamage(int damage) {
-  health -= damage;
+  int reducedDamage = calculateDamageReduction(damage);
+  health -= reducedDamage;
   if (health < 0) health = 0;
+
+  std::cout << name << " took " << reducedDamage << " damage";
+  if (reducedDamage < damage) {
+    std::cout << " (blocked " << (damage - reducedDamage) << ")";
+  }
+  std::cout << "!\n";
 }
 
 void Player::heal(int amount) {
@@ -28,9 +40,9 @@ void Player::heal(int amount) {
 }
 
 void Player::attackEnemy(Enemy& enemy) {
-  int totalAttack = getAttack();
-  std::cout << name << " attacks for " << totalAttack << " damage!\n";
-  enemy.takeDamage(totalAttack);
+  int totalDamage = calculateDamage(getAttack());
+  std::cout << name << " attacks for " << totalDamage << " damage!\n";
+  enemy.takeDamage(totalDamage);
 }
 
 bool Player::isAlive() const { return health > 0; }
@@ -42,12 +54,20 @@ int Player::getHealth() const { return health; }
 int Player::getMaxHealth() const { return maxHealth; }
 
 int Player::getAttack() const {
-  int totalAttack = baseAttack;
+  int totalAttack = baseAttack + (level * 2);
   if (equippedWeapon != nullptr) {
     totalAttack += equippedWeapon->statBonus;
   }
   return totalAttack;
 }
+
+int Player::getDefense() const { return defense + level; }
+
+int Player::getLevel() const { return level; }
+
+int Player::getExperience() const { return experience; }
+
+int Player::getExperienceToNextLevel() const { return experienceToNextLevel; }
 
 int Player::getGold() const { return gold; }
 
@@ -58,6 +78,49 @@ void Player::addGold(int amount) {
   if (amount > 0) {
     std::cout << "You received " << amount << " gold! Total: " << gold << "\n";
   }
+}
+
+void Player::addExperience(int xp) {
+  experience += xp;
+  std::cout << "+" << xp << " XP! (" << experience << "/"
+            << experienceToNextLevel << ")\n";
+
+  while (experience >= experienceToNextLevel) {
+    levelUp();
+  }
+}
+
+void Player::levelUp() {
+  level++;
+  experience -= experienceToNextLevel;
+  experienceToNextLevel = static_cast<int>(100 * std::pow(1.5, level - 1));
+
+  int healthIncrease = 20;
+  int attackIncrease = 3;
+  int defenseIncrease = 2;
+
+  maxHealth += healthIncrease;
+  health = maxHealth;
+  baseAttack += attackIncrease;
+  defense += defenseIncrease;
+
+  std::cout << "\n*** LEVEL UP! ***\n";
+  std::cout << "You are now level " << level << "!\n";
+  std::cout << "Max HP +" << healthIncrease << " (" << maxHealth << ")\n";
+  std::cout << "Attack +" << attackIncrease << " (" << getAttack() << ")\n";
+  std::cout << "Defense +" << defenseIncrease << " (" << getDefense() << ")\n";
+  std::cout << "HP fully restored!\n";
+}
+
+int Player::calculateDamage(int baseDamage) const {
+  int variance = (rand() % 5) - 2;
+  return baseDamage + variance;
+}
+
+int Player::calculateDamageReduction(int incomingDamage) const {
+  int reduction = getDefense() / 2;
+  int finalDamage = incomingDamage - reduction;
+  return (finalDamage > 0) ? finalDamage : 1;
 }
 
 void Player::equipWeapon(const Item& weapon) {
@@ -111,4 +174,13 @@ void Player::displayInventory() const {
       std::cout << "- " << item.name << " (+" << item.statBonus << " attack)\n";
     }
   }
+}
+
+void Player::displayStats() const {
+  std::cout << "\n=== " << name << " - Level " << level << " ===\n";
+  std::cout << "HP: " << health << "/" << maxHealth << "\n";
+  std::cout << "Attack: " << getAttack() << " (Base: " << baseAttack << ")\n";
+  std::cout << "Defense: " << getDefense() << "\n";
+  std::cout << "XP: " << experience << "/" << experienceToNextLevel << "\n";
+  std::cout << "Gold: " << gold << "\n";
 }

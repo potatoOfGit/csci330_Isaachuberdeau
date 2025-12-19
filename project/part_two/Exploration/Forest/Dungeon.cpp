@@ -153,7 +153,7 @@ void Dungeon::handleCell(Player& player, QuestManager& questManager) {
       cout << "Press Enter to continue...";
       cin.get();
 
-      Enemy boss("Dungeon Lord", 150, 30);
+      Enemy boss("Dungeon Lord", 150, 30, 250);
       startBattle(player, boss);
 
       if (!boss.isAlive()) {

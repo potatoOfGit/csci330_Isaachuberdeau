@@ -75,6 +75,7 @@ void startBattle(Player& hero, Enemy& enemy) {
   cout << "\n";
   if (hero.isAlive()) {
     cout << hero.getName() << " wins!\n";
+    hero.addExperience(enemy.getXPReward());
   } else {
     cout << enemy.getName() << " wins!\n";
   }

@@ -1,26 +1,11 @@
 #include "Town.h"
 
 #include <iostream>
-#include <limits>
 
+#include "../../Systems/InputUtils.h"
 #include "../../Systems/Shop.H"
 
 using namespace std;
-
-int getTownChoice(int min, int max) {
-  int choice;
-  while (true) {
-    cout << "Enter your choice: ";
-    if (cin >> choice && choice >= min && choice <= max) {
-      cin.ignore(numeric_limits<streamsize>::max(), '\n');
-      return choice;
-    } else {
-      cout << "Invalid choice! Try again.\n";
-      cin.clear();
-      cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-  }
-}
 
 void visitQuestBoard(QuestManager& questManager) {
   cout << "\n=== QUEST BOARD ===\n";
@@ -37,7 +22,7 @@ void visitQuestBoard(QuestManager& questManager) {
   cout << "7. [Seasoned Adventurer] - Defeat 20 monsters (Reward: 300 gold)\n";
   cout << "8. Leave quest board\n\n";
 
-  int choice = getTownChoice(1, 8);
+  int choice = getChoice(1, 8);
 
   if (choice == 1) {
     Quest quest("Goblin Menace", "Defeat 5 Goblins terrorizing travelers", 5,
@@ -105,7 +90,7 @@ void visitBlacksmith(Player& player) {
 
     blacksmith.displayShop();
 
-    int choice = getTownChoice(1, 4);
+    int choice = getChoice(1, 4);
 
     if (choice == 4) {
       cout << "\n\"Come back anytime!\"\n";
@@ -136,7 +121,7 @@ void visitTavern(Player& player) {
 
     tavern.displayShop();
 
-    int choice = getTownChoice(1, 2);
+    int choice = getChoice(1, 2);
 
     if (choice == 2) {
       cout << "\n\"Safe travels, friend!\"\n";
@@ -168,7 +153,7 @@ void exploreTown(Player& player, QuestManager& questManager) {
     cout << "5. View inventory\n";
     cout << "6. Leave town\n\n";
 
-    int choice = getTownChoice(1, 6);
+    int choice = getChoice(1, 6);
 
     if (choice == 1) {
       visitQuestBoard(questManager);
